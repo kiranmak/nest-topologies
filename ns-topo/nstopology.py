@@ -32,6 +32,9 @@ class FeatureByName(Enum):
     EVPN = "evpn"
     BGP_PEER = "bgp_peer"
 
+'''
+This class is meant to hold topology info as a dictionary/graph.
+'''
 class GDevice:
     def __init__(self, name, ports, role):
         self.name = name
@@ -70,7 +73,8 @@ class NSTopology:
         self.networks = {}
         self.auto_config_addresses()
         config.set_value("assign_random_names", False)
-        config.set_value("routing_suite", "frr")  # Use frr
+        config.set_value("routing_suite", "frr")
+        config.set_value("routing_logs", True)
         config.set_value('delete_namespaces_on_termination', delns)
 
 
@@ -251,11 +255,12 @@ class NSTopology:
 
 
     def start_bgpd(self, rtr):
-        self.daemons[rtr] = RoutingHelper(protocol="ospf")
+        self.daemons[rtr] = RoutingHelper(protocol="bgp")
          # Use OSPF to form routes.
- #RoutingHelper(protocol="ospf").populate_routing_tables()
+        self.daemons[rtr].populate_routing_tables()
 
     def auto_addr_assign(self):
         for n in self.networks:
             with ns:
                 AddressHelper.assign_addresses()
+

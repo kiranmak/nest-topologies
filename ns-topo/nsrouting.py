@@ -16,6 +16,10 @@ from nest.clean_up import delete_namespaces
 import subprocess
 from subprocess import Popen, PIPE
 
+'''
+    SubprocessManager: typically FRR daemaon management class handling output
+    blocking scenarios (PIPE.stdout etc.)
+'''
 class SubprocessManager:
     def __init__(self, command):
         self.command = command
@@ -47,6 +51,14 @@ class SubprocessManager:
         return self.stdout, self.stderr
 
 
+'''
+    NSRoutingDaemon:
+     this is essentially a helper for shell utility, so that if we dont
+     use nest.experiment or test. We can do the following independently
+     - manage topology
+     - manage FRR daemons (start/stop)
+     - config FRRs etc.
+'''
 class NSRoutingDaemon:
     def __init__(self, namespace, daemon, test_name):
         ns_id = namespace
@@ -67,6 +79,9 @@ class NSRoutingDaemon:
             stdout, stderr = manager.communicate()
             print("Standard Output:", stdout)
             print("Standard Error:", stderr)
+
+    def stop(self):
+        # tbd
 
 '''
 ns_id = "r0"
