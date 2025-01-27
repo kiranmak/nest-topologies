@@ -22,6 +22,8 @@ I have taken some inspiration from FRR tests (and munet) and I am leaning toward
     - Second: provisioning through YANG models for other features
 
 This can possibly be done with the following high level architecture
+```markdown
+```plaintext
 
                        Modules in NeST extension
                        ┌─────────────────────┐
@@ -38,6 +40,7 @@ This can possibly be done with the following high level architecture
    └──────┘   └─────┘    └──┘  └──┘    └─┘
                        BGP-Evpn SD-WAN  BGP-AS
                          API    API    Basic-API
+```
 
 ### The existing modules in above diagram are:
 - Namespaces: Basic network namespace suport on linux.
